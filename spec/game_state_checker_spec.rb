@@ -133,4 +133,111 @@ describe Board do
       ], true
     end
   end
+
+  describe '#diagonal_win?' do
+    testing_method = :diagonal_win?
+
+    context 'When same type pieces are going right from left' do
+      context 'when the same type 4th piece is the top leftmost' do
+        include_examples 'winning checking', testing_method, [2, 0], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil],
+          ['X', 'X', nil, nil, nil, nil, nil],
+          ['O', 'O', 'X', nil, nil, nil, nil],
+          ['X', 'O', 'O', 'X', 'O', 'O', nil]
+        ], true
+      end
+
+      context 'when 4th piece is between same type pieces' do
+        include_examples 'winning checking', testing_method, [3, 1], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil],
+          ['X', 'X', nil, nil, nil, nil, nil],
+          ['O', 'O', 'X', nil, nil, nil, nil],
+          ['X', 'O', 'O', 'X', 'O', 'O', nil]
+        ], true
+      end
+
+      context 'when the same type 4th piece is the bottom rightmost' do
+        include_examples 'winning checking', testing_method, [5, 3], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil],
+          ['X', 'X', nil, nil, nil, nil, nil],
+          ['O', 'O', 'X', nil, nil, nil, nil],
+          ['X', 'O', 'O', 'X', 'O', 'O', nil]
+        ], true
+      end
+
+      context 'when there are not enough same type pieces' do
+        include_examples 'winning checking', testing_method, [3, 1], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil],
+          ['X', 'X', nil, nil, nil, nil, nil],
+          ['O', 'O', 'X', nil, nil, nil, nil],
+          ['X', 'O', 'O', 'O', 'O', 'O', nil]
+        ], false
+      end
+    end
+
+    context 'When same type pieces are going left from right' do
+      context 'when the same type 4th piece is the top rightmost' do
+        include_examples 'winning checking', testing_method, [0, 6], [
+          [nil, nil, nil, nil, nil, nil, 'O'],
+          [nil, nil, nil, nil, nil, 'O', 'X'],
+          [nil, nil, nil, nil, 'O', 'O', 'X'],
+          [nil, nil, nil, 'O', 'X', 'X', 'O'],
+          [nil, nil, 'X', 'X', 'O', 'O', 'O'],
+          [nil, nil, 'O', 'X', 'O', 'O', 'O']
+        ], true
+      end
+
+      context 'when 4th piece is between same type pieces' do
+        include_examples 'winning checking', testing_method, [2, 4], [
+          [nil, nil, nil, nil, nil, nil, 'O'],
+          [nil, nil, nil, nil, nil, 'O', 'X'],
+          [nil, nil, nil, nil, 'O', 'O', 'X'],
+          [nil, nil, nil, 'O', 'X', 'X', 'O'],
+          [nil, nil, 'X', 'X', 'O', 'O', 'O'],
+          [nil, nil, 'O', 'X', 'O', 'O', 'O']
+        ], true
+      end
+
+      context 'when the same type 4th piece is the bottom leftmost' do
+        include_examples 'winning checking', testing_method, [3, 3], [
+          [nil, nil, nil, nil, nil, nil, 'O'],
+          [nil, nil, nil, nil, nil, 'O', 'X'],
+          [nil, nil, nil, nil, 'O', 'O', 'X'],
+          [nil, nil, nil, 'O', 'X', 'X', 'O'],
+          [nil, nil, 'X', 'X', 'O', 'O', 'O'],
+          [nil, nil, 'O', 'X', 'O', 'O', 'O']
+        ], true
+      end
+
+      context 'when there are not enough same type pieces' do
+        include_examples 'winning checking', testing_method, [2, 4], [
+          [nil, nil, nil, nil, nil, nil, 'X'],
+          [nil, nil, nil, nil, nil, 'O', 'X'],
+          [nil, nil, nil, nil, 'O', 'O', 'X'],
+          [nil, nil, nil, 'O', 'X', 'X', 'O'],
+          [nil, nil, 'X', 'X', 'O', 'O', 'O'],
+          [nil, nil, 'O', 'X', 'O', 'O', 'O']
+        ], false
+      end
+
+      context 'when the same type pieces are not consecutive' do
+        include_examples 'winning checking', testing_method, [3, 3], [
+          [nil, nil, nil, nil, nil, nil, 'O'],
+          [nil, nil, nil, nil, nil, 'O', 'X'],
+          [nil, nil, nil, nil, 'X', 'O', 'X'],
+          [nil, nil, nil, 'O', 'X', 'X', 'O'],
+          [nil, nil, 'O', 'X', 'O', 'O', 'O'],
+          [nil, 'X', 'O', 'X', 'O', 'O', 'O']
+        ], false
+      end
+    end
+  end
 end
