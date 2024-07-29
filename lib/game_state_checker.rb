@@ -44,6 +44,13 @@ module GameStateChecker
     end
   end
 
+  def full_board?
+    board.each do |row|
+      return false if row.any?(&:nil?)
+    end
+    true
+  end
+
   private
 
   def extract_diagonals(row, col)
