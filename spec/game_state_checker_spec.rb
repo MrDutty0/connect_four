@@ -10,7 +10,10 @@ RSpec.shared_examples 'winning checking' do |testing_method, last_move, board_st
   end
 
   it "returns #{expected_outcome}" do
-    state = game_board.send(testing_method, last_move)
+    state = case testing_method
+            when :full_board? then game_board.send(testing_method)
+            else game_board.send(testing_method, last_move)
+            end
     expect(state).to eql(expected_outcome)
   end
 end
@@ -238,6 +241,32 @@ describe Board do
           [nil, 'X', 'O', 'X', 'O', 'O', 'O']
         ], false
       end
+    end
+  end
+
+  describe '#full_board?' do
+    testing_method = :full_board?
+
+    context 'when board is full of pieces' do
+      include_examples 'winning checking', testing_method, [0, 0], [
+        ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+        ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
+        ['X', 'X', 'O', 'X', 'O', 'O', 'X'],
+        ['O', 'X', 'O', 'X', 'O', 'O', 'O'],
+        ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+        ['O', 'X', 'O', 'X', 'O', 'X', 'O']
+      ], true
+    end
+
+    context 'when board is not full of pieces' do
+      include_examples 'winning checking', testing_method, [0, 0], [
+        ['X', nil, 'X', 'O', 'X', 'O', 'X'],
+        ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
+        ['X', 'X', 'O', 'X', 'O', 'O', 'X'],
+        ['O', 'X', 'O', 'X', 'O', 'O', 'O'],
+        ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+        ['O', 'X', 'O', 'X', 'O', 'X', 'O']
+      ], false
     end
   end
 end
