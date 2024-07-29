@@ -14,35 +14,56 @@ module GameStateChecker
     row = []
     (i...end_idx).each { |culumn_idx| row << board[culumn_idx][j] }
 
-    winner_in_row?(row)
+    winner_in_row?(row, 0)
   end
 
   def horizontal_win?(last_move)
     i, j = last_move
-    current_piece = board[i][j]
+    winner_in_row?(board[i], j)
+  end
 
+  def winner_in_row?(row, idx)
+    current_piece = row[idx]
     piece_occurrences = 1
 
     # Check left
-    (j - 1).downto(0) do |left|
-      break if board[i][left] != current_piece
-
-      piece_occurrences += 1
-    end
+    (idx - 1).downto(0) { |left| row[left] == current_piece ? piece_occurrences += 1 : break }
 
     # Check right
-    (j + 1).upto(Constants::ROW_LENGTH - 1) do |right|
-      break if board[i][right] != current_piece
-
-      piece_occurrences += 1
-    end
+    (idx + 1).upto(row.size - 1) { |right| row[right] == current_piece ? piece_occurrences += 1 : break }
 
     piece_occurrences >= Constants::WINNING_ROW_LENGTH
   end
 
+  def diagonal_win?(last_move)
+    row, col = last_move
+
+    diagonals = extract_diagonals(row, col)
+    diagonals.any? do |diagonal|
+      winner_in_row?(diagonal, col)
+    end
+  end
+
   private
 
-  def winner_in_row?(row)
-    row.compact.size == (Constants::WINNING_ROW_LENGTH) && row.uniq.size == 1
+  def extract_diagonals(row, col)
+    [
+      extract_diagonal(row, col, 1, 1).reverse + [board[row][col]] + extract_diagonal(row, col, -1, -1),
+      extract_diagonal(row, col, 1, -1).reverse + [board[row][col]] + extract_diagonal(row, col, -1, 1)
+    ]
+  end
+
+  def extract_diagonal(row, col, row_inc, col_inc)
+    diagonal = []
+
+    while in_bounds?(row += row_inc, col += col_inc)
+      diagonal << board[row][col]
+    end
+
+    diagonal
+  end
+
+  def in_bounds?(row, col)
+    row.between?(0, Constants::COLUMN_LENGTH - 1) && col.between?(0, Constants::ROW_LENGTH - 1)
   end
 end
