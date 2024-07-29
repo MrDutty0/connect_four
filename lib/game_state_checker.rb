@@ -51,6 +51,10 @@ module GameStateChecker
     true
   end
 
+  def game_over?(last_move)
+    vertical_win?(last_move) || horizontal_win?(last_move) || diagonal_win?(last_move) || full_board?
+  end
+
   private
 
   def extract_diagonals(row, col)
