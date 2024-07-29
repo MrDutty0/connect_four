@@ -269,4 +269,89 @@ describe Board do
       ], false
     end
   end
+
+  describe '#game_over?' do
+    testing_method = :game_over?
+
+    context 'when game ends' do
+      context 'when won vertically' do
+        include_examples 'winning checking', testing_method, [0, 1], [
+          [nil, 'X', nil, nil, nil, nil, nil],
+          [nil, 'X', nil, nil, nil, nil, nil],
+          [nil, 'X', nil, nil, nil, nil, nil],
+          [nil, 'X', nil, nil, nil, nil, nil],
+          [nil, 'O', nil, nil, nil, nil, nil],
+          [nil, 'X', nil, nil, nil, nil, nil]
+        ], true
+      end
+
+      context 'when won horizontally' do
+        include_examples 'winning checking', testing_method, [5, 1], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', 'O', 'O', 'O', 'O', nil, nil]
+        ], true
+      end
+
+      context 'when won diagonally' do
+        include_examples 'winning checking', testing_method, [5, 3], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil],
+          ['X', 'X', nil, nil, nil, nil, nil],
+          ['O', 'O', 'X', nil, nil, nil, nil],
+          ['X', 'O', 'O', 'X', 'O', 'O', nil]
+        ], true
+      end
+
+      context 'when it is a tie' do
+        include_examples 'winning checking', testing_method, [0, 0], [
+          ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+          ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
+          ['X', 'X', 'O', 'X', 'O', 'X', 'X'],
+          ['O', 'X', 'O', 'X', 'O', 'O', 'O'],
+          ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+          ['O', 'X', 'O', 'X', 'O', 'X', 'O']
+        ], true
+      end
+    end
+
+    context 'when game is still in progress' do
+      context 'when there is no winner yet' do
+        include_examples 'winning checking', testing_method, [5, 3], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil],
+          ['X', 'X', nil, nil, nil, nil, nil],
+          ['O', 'O', 'O', nil, nil, nil, nil],
+          ['X', 'O', 'O', 'X', 'O', 'O', nil]
+        ], false
+      end
+
+      context 'when board is almost full' do
+        include_examples 'winning checking', testing_method, [0, 0], [
+          ['X', nil, 'X', 'O', 'X', 'O', 'X'],
+          ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
+          ['X', 'X', 'O', 'X', 'O', 'O', 'X'],
+          ['O', 'X', 'O', 'X', 'O', 'O', 'O'],
+          ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
+          ['O', 'X', 'O', 'X', 'O', 'X', 'O']
+        ], false
+      end
+
+      context 'when only one piece is placed' do
+        include_examples 'winning checking', testing_method, [5, 0], [
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          ['X', nil, nil, nil, nil, nil, nil]
+        ], false
+      end
+    end
+  end
 end
