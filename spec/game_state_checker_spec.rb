@@ -251,7 +251,7 @@ describe Board do
       include_examples 'winning checking', testing_method, [0, 0], [
         ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
         ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
-        ['X', 'X', 'O', 'X', 'O', 'O', 'X'],
+        ['X', 'X', 'O', 'X', 'O', 'X', 'X'],
         ['O', 'X', 'O', 'X', 'O', 'O', 'O'],
         ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
         ['O', 'X', 'O', 'X', 'O', 'X', 'O']
@@ -262,7 +262,7 @@ describe Board do
       include_examples 'winning checking', testing_method, [0, 0], [
         ['X', nil, 'X', 'O', 'X', 'O', 'X'],
         ['O', 'X', 'O', 'X', 'O', 'X', 'O'],
-        ['X', 'X', 'O', 'X', 'O', 'O', 'X'],
+        ['X', 'X', 'O', 'X', 'O', 'X', 'X'],
         ['O', 'X', 'O', 'X', 'O', 'O', 'O'],
         ['X', 'O', 'X', 'O', 'X', 'O', 'X'],
         ['O', 'X', 'O', 'X', 'O', 'X', 'O']
