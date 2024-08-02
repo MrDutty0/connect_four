@@ -11,4 +11,13 @@ module Constants
   YELLOW = :light_yellow
   BLUE = :blue
   HOVER_BACKGROUND = :light_black
+
+  ENTER_KEY = "\r"
+  UP_KEY = "\e[A"
+  DOWN_KEY = "\e[B"
+  RIGHT_KEY = "\e[C"
+  LEFT_KEY = "\e[D"
+
+  VALID_KEYS = [UP_KEY, DOWN_KEY, RIGHT_KEY, LEFT_KEY, ENTER_KEY].freeze
+  # VALID_KEYS = ['\e[A', '\e[B', '\e[C', '\e[D', '\r'].freeze
 end
