@@ -11,8 +11,4 @@ class Player
     @cli = CLI.new
     @name = cli.prompt_name(player_id)
   end
-
-  def retrieve_move(board)
-    cli.final_move(board)
-  end
 end
