@@ -13,6 +13,6 @@ class Player
   end
 
   def retrieve_move(board)
-    cli.final_move(board)
+    cli.final_move(board, name)
   end
 end

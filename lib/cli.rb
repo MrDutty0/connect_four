@@ -18,10 +18,10 @@ class CLI
     @error_msg = nil
   end
 
-  def final_move(board)
+  def final_move(board, player_name)
     loop do
       display_error_msg
-      move = retrieve_move(board)
+      move = retrieve_move(board, player_name)
 
       # return move if board.valid_move?(move)
 
@@ -35,13 +35,13 @@ class CLI
     [Constants::COLUMN_LENGTH / 2, Constants::ROW_LENGTH / 2]
   end
 
-  def retrieve_move(board)
+  def retrieve_move(board, player_name)
     move = initial_move_position
 
     loop do
       display_error_msg
+      display_move_prompt_text(player_name)
       display_board(board, move)
-      display_move_prompt_text
 
       key = prompt_for_single_char
       clear_screen

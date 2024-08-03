@@ -30,7 +30,8 @@ module IOHandler
     input
   end
 
-  def display_move_prompt_text
+  def display_move_prompt_text(player_name)
+    puts "#{player_name}'s turn"
     puts 'Use arrow keys to move, press enter to submit'
   end
 
