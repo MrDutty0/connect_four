@@ -13,7 +13,4 @@ class Board
   def initialize
     @board = Array.new(Constants::COLUMN_LENGTH) { Array.new(Constants::ROW_LENGTH) }
   end
-
-  # def determine_game_outcome(last_move)
-  # end
 end

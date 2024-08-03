@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'colorize'
-
 # Constants for the game
 module Constants
   ROW_LENGTH = 7
@@ -19,5 +17,4 @@ module Constants
   LEFT_KEY = "\e[D"
 
   VALID_KEYS = [UP_KEY, DOWN_KEY, RIGHT_KEY, LEFT_KEY, ENTER_KEY].freeze
-  # VALID_KEYS = ['\e[A', '\e[B', '\e[C', '\e[D', '\r'].freeze
 end
