@@ -94,4 +94,50 @@ describe KeyHandler do
       end
     end
   end
+
+  describe '#update_move' do
+    shared_examples 'moving' do |initial_move, key, expected_move|
+      it "correctly moves when the key is: #{key.inspect}" do
+        result = cli_dummy.update_move(initial_move, key)
+
+        expect(result).to eq(expected_move)
+      end
+    end
+
+    context 'when the move is at the boundaries' do
+      context 'wrapping from the top-left corner [0, 0]' do
+        initial_move = [0, 0]
+
+        include_examples 'moving', initial_move, Constants::LEFT_KEY, [0, Constants::ROW_LENGTH - 1]
+        include_examples 'moving', initial_move, Constants::UP_KEY, [Constants::COLUMN_LENGTH - 1, 0]
+      end
+
+      context 'wrapping from the bottom-right corner [COLUMN_LENGTH - 1, ROW_LENGTH - 1]' do
+        initial_move = [Constants::COLUMN_LENGTH - 1, Constants::ROW_LENGTH - 1]
+
+        include_examples 'moving', initial_move, Constants::RIGHT_KEY, [Constants::COLUMN_LENGTH - 1, 0]
+        include_examples 'moving', initial_move, Constants::DOWN_KEY, [0, Constants::ROW_LENGTH - 1]
+      end
+    end
+
+    context 'when moving from a non-boundary position' do
+      initial_move = [2, 3]
+
+      context 'moving left' do
+        include_examples 'moving', initial_move, Constants::LEFT_KEY, [2, 2]
+      end
+
+      context 'moving left' do
+        include_examples 'moving', initial_move, Constants::UP_KEY, [1, 3]
+      end
+
+      context 'moving left' do
+        include_examples 'moving', initial_move, Constants::RIGHT_KEY, [2, 4]
+      end
+
+      context 'moving left' do
+        include_examples 'moving', initial_move, Constants::DOWN_KEY, [3, 3]
+      end
+    end
+  end
 end
