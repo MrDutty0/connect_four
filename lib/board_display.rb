@@ -11,7 +11,7 @@ module BoardDisplay
   end
 
   def colorize_board(board, hovered_move)
-    board_cp = Marshal.load(Marshal.dump(board))
+    board_cp = Marshal.load(Marshal.dump(board.board))
 
     board_cp.map.with_index do |row, row_idx|
       row.map.with_index do |piece, col_idx|

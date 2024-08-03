@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'io/console'
+require_relative 'board'
 require_relative 'constants'
 require_relative 'key_handler'
 require_relative 'board_display'
@@ -23,7 +24,7 @@ class CLI
       display_error_msg
       move = retrieve_move(board, player_name)
 
-      # return move if board.valid_move?(move)
+      return move if board.valid_move?(move)
 
       @error_msg = 'Invalid move'
     end
