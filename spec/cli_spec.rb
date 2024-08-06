@@ -8,7 +8,7 @@ describe CLI do
   let(:board) { instance_double(Board) }
   let(:player_name) { 'Player 1' }
 
-  context '#retrieve_move' do
+  describe '#retrieve_move' do
     let(:initial_position) { [Constants::COLUMN_LENGTH / 2, Constants::ROW_LENGTH / 2] }
     let(:error_msg) { 'Invalid pressed key' }
 
@@ -78,6 +78,42 @@ describe CLI do
           result = cli.retrieve_move(board, player_name)
           expect(result).to eq(expected_move_outcome)
         end
+      end
+    end
+  end
+
+  describe '#final_move' do
+    let(:valid_move) { [1, 1] }
+
+    context 'when a valid move is made' do
+      before do
+        allow(cli).to receive(:retrieve_move).and_return(valid_move)
+        allow(board).to receive(:valid_move?).and_return(true)
+      end
+
+      it 'returns the valid move' do
+        expect(cli).to receive(:retrieve_move).once
+
+        result = cli.final_move(board, player_name)
+        expect(result).to eq(valid_move)
+      end
+    end
+
+    context 'when an invalid move is followed by a valid move' do
+      let(:invalid_move) { [2, 2] }
+      let(:error_msg) { 'Invalid move' }
+
+      before do
+        allow(cli).to receive(:retrieve_move).and_return(invalid_move, valid_move)
+        allow(board).to receive(:valid_move?).and_return(false, true)
+      end
+
+      it 'error message is displayed and valid move is returned' do
+        expect(cli).to receive(:retrieve_move).twice
+        expect(cli).to receive(:puts).with(error_msg).once
+
+        result = cli.final_move(board, player_name)
+        expect(result).to eq(valid_move)
       end
     end
   end
