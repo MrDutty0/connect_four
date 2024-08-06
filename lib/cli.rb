@@ -30,12 +30,6 @@ class CLI
     end
   end
 
-  private
-
-  def initial_move_position
-    [Constants::COLUMN_LENGTH / 2, Constants::ROW_LENGTH / 2]
-  end
-
   def retrieve_move(board, player_name)
     move = initial_move_position
 
@@ -50,5 +44,9 @@ class CLI
       move = handle_key_press(key, move)
       return move if enter_key?(key)
     end
+  end
+
+  def initial_move_position
+    [Constants::COLUMN_LENGTH / 2, Constants::ROW_LENGTH / 2]
   end
 end
