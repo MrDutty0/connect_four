@@ -27,4 +27,8 @@ class Board
     below_piece = board[row + 1][column]
     !below_piece.nil?
   end
+
+  def place_piece(move, piece)
+    @board[move[0]][move[1]] = piece
+  end
 end
