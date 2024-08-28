@@ -49,4 +49,11 @@ module IOHandler
 
     puts 'Good try, but the game is tied'
   end
+
+  def prompt_replay
+    clear_screen
+
+    puts 'Do you want to play again? (y/n)'
+    prompt_for_single_char
+  end
 end

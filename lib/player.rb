@@ -23,4 +23,8 @@ class Player
   def handle_tie
     cli.display_tie_message
   end
+
+  def ask_replay
+    cli.prompt_replay
+  end
 end
