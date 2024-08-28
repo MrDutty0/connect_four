@@ -40,4 +40,29 @@ describe Game do
       end
     end
   end
+
+  describe '#switch_current_player' do
+    context 'when switching once' do
+      it 'switches to the next player' do
+        previous_current_player = game.current_player
+
+        game.switch_current_player
+        new_current_player = game.current_player
+
+        expect(new_current_player).not_to eq(previous_current_player)
+      end
+    end
+
+    context 'when switching twice' do
+      it 'returns to the original player' do
+        previous_current_player = game.current_player
+
+        game.switch_current_player
+        game.switch_current_player
+        new_current_player = game.current_player
+
+        expect(new_current_player).to eq(previous_current_player)
+      end
+    end
+  end
 end
