@@ -15,4 +15,12 @@ class Player
   def retrieve_move(board)
     cli.final_move(board, name)
   end
+
+  def handle_win
+    cli.display_win_message
+  end
+
+  def handle_tie
+    cli.display_tie_message
+  end
 end

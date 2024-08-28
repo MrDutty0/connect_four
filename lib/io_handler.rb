@@ -1,10 +1,9 @@
-# # frozen_string_literal: true
+# frozen_string_literal: true
 
 require 'io/console'
 
 # Module to handle input/output
 module IOHandler
-
   def prompt_name(player_id)
     puts "Player #{player_id}"
     puts 'Enter your name:'
@@ -37,5 +36,17 @@ module IOHandler
 
   def clear_screen
     puts "\e[2J"
+  end
+
+  def display_win_message
+    clear_screen
+
+    puts "Congrats, #{name}, you have won!"
+  end
+
+  def display_tie_message
+    clear_screen
+
+    puts 'Good try, but the game is tied'
   end
 end
