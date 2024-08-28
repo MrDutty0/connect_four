@@ -27,4 +27,8 @@ class Player
   def ask_replay
     cli.prompt_replay
   end
+
+  def intro_text
+    cli.display_intro_text
+  end
 end

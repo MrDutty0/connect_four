@@ -56,4 +56,10 @@ module IOHandler
     puts 'Do you want to play again? (y/n)'
     prompt_for_single_char
   end
+
+  def display_intro_text
+    clear_screen
+
+    puts 'Welcome to Connect four!'
+  end
 end
