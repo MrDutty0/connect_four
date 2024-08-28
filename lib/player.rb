@@ -12,7 +12,7 @@ class Player
     @name = cli.prompt_name(player_id)
   end
 
-  def retrieve_move(board)
+  def get_move(board)
     cli.final_move(board, name)
   end
 
