@@ -39,4 +39,8 @@ class Game
   def switch_current_player
     @current_player = (@players - [current_player]).first
   end
+
+  def set_up_new_game
+    @board = Board.new
+  end
 end

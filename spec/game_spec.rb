@@ -116,4 +116,21 @@ describe Game do
       end
     end
   end
+
+  describe '#set_up_new_game' do
+    let(:new_board) { instance_double(Board) }
+
+    before do
+      allow(Board).to receive(:new).and_return(new_board)
+      game.set_up_new_game
+    end
+
+    it 'resets the board to a new one' do
+      expect(game.board).to eql(new_board)
+    end
+
+    it 'creates a new object of Board when called' do
+      expect(Board).to have_received(:new).at_least(1)
+    end
+  end
 end
