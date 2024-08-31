@@ -38,10 +38,10 @@ module IOHandler
     puts "\e[2J"
   end
 
-  def display_win_message
+  def display_win_message(player_name)
     clear_screen
 
-    puts "Congrats, #{name}, you have won!"
+    puts "Congrats, #{player_name}, you have won!"
   end
 
   def display_tie_message
@@ -51,8 +51,6 @@ module IOHandler
   end
 
   def prompt_replay
-    clear_screen
-
     puts 'Do you want to play again? (y/n)'
     prompt_for_single_char
   end

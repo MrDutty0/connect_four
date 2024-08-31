@@ -17,7 +17,7 @@ class Player
   end
 
   def handle_win
-    cli.display_win_message
+    cli.display_win_message(name)
   end
 
   def handle_tie
