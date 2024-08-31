@@ -71,4 +71,31 @@ describe Board do
       end
     end
   end
+
+  describe '#place_piece' do
+    context 'when placing a piece on an empty place' do
+      let(:piece) { 'X' }
+      let(:move) { [5, 0] }
+
+      it 'places the piece at the specified location' do
+        board.place_piece(move, piece)
+
+        expect(board.board[move[0]][move[1]]).to eq(piece)
+      end
+    end
+
+    context 'when placing a piece on an occupied place' do
+      let(:piece) { 'X' }
+      let(:move) { [5, 0] }
+
+      before do
+        board.place_piece(move, 'O')
+      end
+
+      it 'overwrites the existing piece' do
+        board.place_piece(move, piece)
+        expect(board.board[move[0]][move[1]]).to eq(piece)
+      end
+    end
+  end
 end
