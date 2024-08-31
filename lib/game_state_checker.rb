@@ -36,12 +36,31 @@ module GameStateChecker
   end
 
   def diagonal_win?(last_move)
-    row, col = last_move
+    diagonals = [[1, 1], [1, -1]]
 
-    diagonals = extract_diagonals(row, col)
-    diagonals.any? do |diagonal|
-      winner_in_row?(diagonal, col)
+    diagonals.any? do |row_step, col_step|
+      total_pieces =
+        count_continuous_pieces(last_move, row_step, col_step) +
+        count_continuous_pieces(last_move, -row_step, -col_step) + 1
+      total_pieces >= Constants::WINNING_ROW_LENGTH
     end
+  end
+
+  def count_continuous_pieces(start_position, row_step, col_step)
+    piece_to_match = board[start_position[0]][start_position[1]]
+
+    current_row = start_position[0] + row_step
+    current_col = start_position[1] + col_step
+
+    matching_pieces_count = 0
+
+    while in_bounds?(current_row, current_col) && board[current_row][current_col] == piece_to_match
+      matching_pieces_count += 1
+      current_row += row_step
+      current_col += col_step
+    end
+
+    matching_pieces_count
   end
 
   def full_board?
@@ -53,25 +72,6 @@ module GameStateChecker
 
   def game_over?(last_move)
     vertical_win?(last_move) || horizontal_win?(last_move) || diagonal_win?(last_move) || full_board?
-  end
-
-  private
-
-  def extract_diagonals(row, col)
-    [
-      extract_diagonal(row, col, 1, 1).reverse + [board[row][col]] + extract_diagonal(row, col, -1, -1),
-      extract_diagonal(row, col, 1, -1).reverse + [board[row][col]] + extract_diagonal(row, col, -1, 1)
-    ]
-  end
-
-  def extract_diagonal(row, col, row_inc, col_inc)
-    diagonal = []
-
-    while in_bounds?(row += row_inc, col += col_inc)
-      diagonal << board[row][col]
-    end
-
-    diagonal
   end
 
   def in_bounds?(row, col)
