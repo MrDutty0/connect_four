@@ -133,4 +133,32 @@ describe Game do
       expect(Board).to have_received(:new).at_least(1)
     end
   end
+
+  describe '#play_game' do
+    context 'after first match, declines playing again' do
+      before do
+        allow(game).to receive(:play_again?).and_return(false)
+      end
+
+      it 'plays one match and does not call set_up_new_game' do
+        expect(game).to receive(:play_match).once
+        expect(game).to_not receive(:set_up_new_game)
+
+        game.play_game
+      end
+    end
+
+    context 'after two matches, declines playing again' do
+      before do
+        allow(game).to receive(:play_again?).and_return(true, false)
+      end
+
+      it 'plays two matches and calls set_up_new_game once' do
+        expect(game).to receive(:play_match).twice
+        expect(game).to receive(:set_up_new_game).once
+
+        game.play_game
+      end
+    end
+  end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'board'
+require_relative 'board'
 
 # Managing game logic
 class Game
@@ -11,6 +11,16 @@ class Game
     @current_player = players.first
 
     @board = Board.new
+  end
+
+  def play_game
+    loop do
+      play_match
+
+      break unless play_again?
+
+      set_up_new_game
+    end
   end
 
   def play_match
